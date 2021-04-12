@@ -10,13 +10,22 @@
         <title>{{ title }}</title>
 	</head>
 	<body>
-		<header>
-  		</header>
-		<!-- Begin page content -->
+		<header class="container">
+			<h1>Наш интернет магазин, пока без названия</h1>
+			<a class="p-2 txt-dark" href="/">Главная</a>
+			<a class="p-2 txt-dark" href="/about">О нас</a>
+			<a class="p-2 txt-dark" href="/account">Аккаунты</a>
+			<a class="p-2 txt-dark" href="/catalog">Каталог</a>
+  		</header>	
+
+
+
+
 		<main role="main" class="container">
 			{% block content %}{% endblock %}
 		</main>
-		<footer>
+		<footer class="container">
+			©Антон и Максим, копирайтить нельзя
 		</footer>
 	</body>
 </html>
