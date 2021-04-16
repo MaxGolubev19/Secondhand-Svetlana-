@@ -3,6 +3,7 @@
 	<head>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+		<link rel="stylesheet" type="text/css" href={{ url_for('static', filename='style.css')}}>
     	<link rel="stylesheet"
           	  href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
           	  integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
@@ -10,22 +11,22 @@
         <title>{{ title }}</title>
 	</head>
 	<body>
-		<header class="container">
-			<h1>Наш интернет магазин, пока без названия</h1>
-			<a class="p-2 txt-dark" href="/">Главная</a>
-			<a class="p-2 txt-dark" href="/about">О нас</a>
-			<a class="p-2 txt-dark" href="/account">Аккаунты</a>
-			<a class="p-2 txt-dark" href="/catalog">Каталог</a>
+		<header>
+			<div class="title">Название</div>
+			<div class="main-menu">
+				<a class="p-2 text-white" href="/">Главная</a>
+				<a class="p-2 text-white" href="/catalog">Каталог</a>
+				<a class="p-2 text-white" href="/account">Аккаунт</a>
+				<a class="p-2 text-white" href="/about">О нас</a>
+			</div>
   		</header>	
-
-
-
-
-		<main role="main" class="container">
+		<main role="main" class="container page">
 			{% block content %}{% endblock %}
 		</main>
-		<footer class="container">
-			©Антон и Максим, копирайтить нельзя
+		<footer>
+			<div class="container">
+				©Антон и Максим, копирайтить нельзя
+			</div>
 		</footer>
 	</body>
 </html>

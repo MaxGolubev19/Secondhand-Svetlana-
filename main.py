@@ -1,6 +1,7 @@
 import os
 from flask import Flask, render_template
 from data import db_session
+from added import add_user, add_product, add_cart
 
 
 app = Flask(__name__)
@@ -14,11 +15,10 @@ def index():
     params['title'] = 'Главная'
     return render_template('index.html', **params)
 
-
 @app.route('/about')
 def about():
     params = {}
-    params['title'] = 'Главная'
+    params['title'] = 'О нас'
     return render_template('about.html', **params)
 
 @app.route('/catalog')
@@ -51,13 +51,14 @@ def account():
     params['title'] = 'Аккаунт'
     return render_template('account.html', **params)
 
-
+"""
 if __name__ == '__main__':
     port = int(os.environ.get("PORT", 5000))
     app.run(host='0.0.0.0', port=port)
-
+    
 """
+
+
 if __name__ == '__main__':
     db_session.global_init("db/shop.db")
     app.run()
-"""

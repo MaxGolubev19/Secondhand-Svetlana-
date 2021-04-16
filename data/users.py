@@ -3,7 +3,7 @@ import sqlalchemy as sql
 from .db_session import SqlAlchemyBase
 
 
-class Users(SqlAlchemyBase):
+class User(SqlAlchemyBase):
     __tablename__ = 'users'
 
     id = sql.Column(sql.Integer, primary_key=True, autoincrement=True)

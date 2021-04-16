@@ -3,7 +3,7 @@ import sqlalchemy as sql
 from .db_session import SqlAlchemyBase
 
 
-class Catalog(SqlAlchemyBase):
+class Product(SqlAlchemyBase):
     __tablename__ = 'catalog'
 
     id = sql.Column(sql.Integer, primary_key=True, autoincrement=True)
