@@ -1,5 +1,53 @@
 {% extends "base.html" %}
 
 {% block content %}
-		<a class="btn btn-primary" href="/create">Добавить товар</a>
+<div class="row row-cols-1 row-cols-md-3 mb-3 text-center">
+      <div class="col">
+        <div class="card mb-4 rounded-3 shadow-sm">
+          <div class="card-header py-3">
+            <h4 class="my-0 fw-normal">Мужское</h4>
+          </div>
+          <div class="card-body">
+            <ul class="list-unstyled mt-3 mb-4">
+              <li>Одежда</li>
+              <li>Обувь</li>
+              <li>Аксессуары</li>
+            </ul>
+            <a class="w-100 btn btn-lg btn-primary" href="/catalog" role="button">Искать мужские товары</a>
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <div class="card mb-4 rounded-3 shadow-sm">
+          <div class="card-header py-3">
+            <h4 class="my-0 fw-normal">Женское</h4>
+          </div>
+          <div class="card-body">
+            <ul class="list-unstyled mt-3 mb-4">
+              <li>Одежда</li>
+              <li>Обувь</li>
+              <li>Аксессуары</li>
+              <li>Косметика</li>
+            </ul>
+            <a class="w-100 btn btn-lg btn-primary" href="/catalog" role="button">Искать женские товары</a>
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <div class="card mb-4 rounded-3 shadow-sm">
+          <div class="card-header py-3 text-Black bg-Black border-Black">
+            <h4 class="my-0 fw-normal">Дети</h4>
+          </div>
+          <div class="card-body">
+            <ul class="list-unstyled mt-3 mb-4">
+              <li>Одежда</li>
+              <li>Обувь</li>
+              <li>Игрушки</li>
+            </ul>
+            <a class="w-100 btn btn-lg btn-primary" href="/catalog" role="button">Искать детские товары</a>
+          </div>
+        </div>
+      </div>
+    </div>
+<a class="btn btn-outline-primary btn-lg btn-block" href="/create" role="button">Добавить товар</a>
 {% endblock %}
