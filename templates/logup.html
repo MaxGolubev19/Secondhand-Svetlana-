@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Войти</h1>
+<div>
+    <form class="login_form" method="post">
+        <div class="form-group">
+        <input type="login" class="form-control" id="login"  placeholder="Введите логин" name="login">
+        <div class="form-group">
+        <input type="password" class="form-control" id="password"  placeholder="Введите пароль" name="password">
+        <button type="submit" class="btn-center btn-primary" href="/account">Войти</button><br>
+    </form>
+</div>
+
+	
+{% endblock %}
