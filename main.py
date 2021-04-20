@@ -1,6 +1,6 @@
 import os
 from flask import Flask, render_template, request
-from werkzeug.security import generate_password_hash
+from werkzeug.security import generate_password_hash, check_password_hash
 from data import db_session
 from added import add_user, add_product, add_cart
 
@@ -58,6 +58,7 @@ def create(category):
     params['title'] = 'Добавление товара'
     return render_template(f'{category}.html', **params)
 
+
 @app.route('/login', methods=['post', 'get'])
 def login():
     from data.users import User
@@ -79,6 +80,15 @@ def login():
         db_sess.add(user)
         db_sess.commit()
     return render_template('login.html', **params)
+
+
+@app.route('/logup', methods=['post', 'get'])
+def logup():
+    from data.users import User
+    
+    params = {}
+    params['title'] = 'Вход'
+    return render_template('logup.html', **params)
 
 
 @app.route('/account')
