@@ -1,5 +1,6 @@
 import os
-from flask import Flask, render_template
+from flask import Flask, render_template, request
+from werkzeug.security import generate_password_hash
 from data import db_session
 from added import add_user, add_product, add_cart
 
@@ -57,10 +58,26 @@ def create(category):
     params['title'] = 'Добавление товара'
     return render_template(f'{category}.html', **params)
 
-@app.route('/login')
+@app.route('/login', methods=['post', 'get'])
 def login():
+    from data.users import User
+    
     params = {}
     params['title'] = 'Регистрация'
+    if request.method == 'POST':
+        user = User()
+        user.surname = request.form.get('surname')
+        user.name = request.form.get('name')
+        user.phone = request.form.get('phone_number')
+        user.email = request.form.get('email')
+        user.address = request.form.get('address')
+        user.login = request.form.get('login')
+        user.hashed_password = generate_password_hash(request.form.get('password'))
+        user.size = request.form.get('size')
+        user.sex = request.form.get('sex')
+        db_sess = db_session.create_session()
+        db_sess.add(user)
+        db_sess.commit()
     return render_template('login.html', **params)
 
 
@@ -81,3 +98,29 @@ if __name__ == '__main__':
     db_session.global_init("db/shop.db")
     app.run()
 """
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
