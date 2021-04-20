@@ -18,7 +18,7 @@
 				<a class="p-2 text-white" href="/catalog">Каталог</a>
 				<a class="p-2 text-white" href="/about">О нас</a>
 				{% if True %}
-					<a class="btn btn-light" href="/account" style="float: right">Войти</a>
+					<a class="btn btn-light" href="/login" style="float: right">Войти</a>
 				{% else %}
 					<a class="btn btn-light" href="/account" style="float: right">Аккаунт</a>
 				{% endif %}
@@ -27,6 +27,7 @@
 		<main role="main" class="container page">
 			{% block content %}{% endblock %}
 		</main>
+		<br></br>
 		<footer>
 			<div class="container">
 				©Антон и Максим, копирайтить нельзя

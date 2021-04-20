@@ -52,11 +52,10 @@ def choice():
 
 
 @app.route('/create/<category>')
-def create():
+def create(category):
     params = {}
     params['title'] = 'Добавление товара'
-    return render_template('create.html', **params)
-
+    return render_template(f'{category}.html', **params)
 
 @app.route('/login')
 def login():
@@ -73,10 +72,11 @@ def account():
 
 
 if __name__ == '__main__':
+    db_session.global_init("db/shop.db")
     port = int(os.environ.get("PORT", 5000))
     app.run(host='0.0.0.0', port=port)
+    
 """
-
 if __name__ == '__main__':
     db_session.global_init("db/shop.db")
     app.run()
