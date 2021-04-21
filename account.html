@@ -1,8 +1,0 @@
-{% extends "base.html" %}
-
-{% block content %}
-	<h1>{{current_user.surname}} {{current_user.name}}</h1>
-	{% if current_user.status == 'admin'%}
-		<h6>админ</h6>
-	{% endif %}
-{% endblock %}
