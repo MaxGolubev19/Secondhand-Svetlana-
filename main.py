@@ -4,14 +4,13 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from data import db_session
 from added import add_user, add_product, add_cart
 from data.users import User
-from flask_login import LoginManager, login_user
+from flask_login import LoginManager, login_user, current_user
 
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'yandexlyceum_secret_key'
 login_manager = LoginManager()
 login_manager.init_app(app)
-user = None
 
 
 @app.route('/')
@@ -19,7 +18,6 @@ user = None
 def index():
     params = {}
     params['title'] = 'Главная'
-    params['user'] = user
     return render_template('index.html', **params)
 
 
@@ -27,7 +25,6 @@ def index():
 def about():
     params = {}
     params['title'] = 'О нас'
-    params['user'] = user
     return render_template('about.html', **params)
 
 
@@ -35,7 +32,6 @@ def about():
 def catalog():
     params = {}
     params['title'] = 'Товары'
-    params['user'] = user
     return render_template('catalog.html', **params)
 
 
@@ -43,7 +39,6 @@ def catalog():
 def product(product):
     params = {}
     params['title'] = product
-    params['user'] = user
     return render_template('product.html', **params)
 
 
@@ -51,7 +46,6 @@ def product(product):
 def category(category):
     params = {}
     params['title'] = category
-    params['user'] = user
     return render_template(f'{category}.html', **params)
 
 
@@ -59,21 +53,17 @@ def category(category):
 def choice():
     params = {}
     params['title'] = 'Добавление товара'
-    params['user'] = user
     return render_template('choice.html', **params)
 
 
 @app.route('/create/<category>')
 def create(category):
     params = {}
-    params['title'] = 'Добавление товара'
-    params['user'] = user
     return render_template(f'{category}.html', **params)
 
 
 @app.route('/logup', methods=['post', 'get'])
 def login():
-    global user
     from data.users import User
     
     params = {}
@@ -122,7 +112,6 @@ def load_user(user_id):
 def account():
     params = {}
     params['title'] = 'Аккаунт'
-    params['user'] = user
     return render_template('account.html', **params)
 
 
