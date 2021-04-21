@@ -1,5 +1,30 @@
 {% extends "base.html" %}
 
 {% block content %}
-
+<h1>Одежда</h1>
+<div>
+    <form class="login_form" method="post">
+    	<input type="product_name" class="form-control" id="product_name" placeholder="Введите название товара" name="product_name">
+        <div class="form-group">
+            <label for="classSelect">Введите категорию:</label>
+            <select class="form-control" id="classSelect" name="class">
+              <option>Мужское</option>
+              <option>Женское</option>
+              <option>Дети</option>
+            </select>
+        </div>
+        <input type="size" class="form-control" id="size" placeholder="Введите размер (прмер: L)" name="size">
+        <div class="form-group">
+            <label for="description">Введите описание товара:</label>
+            <textarea class="form-control" id="description" rows="3" name="description"></textarea>
+        </div><br>
+        <div class="form-group">
+            <label for="photo">Приложите фотографию</label>
+            <input type="file" class="form-control-file" id="photo" name="file">
+        </div><br>
+        <input type="price" class="form-control" id="price" placeholder="Введите цену (руб.)" name="price">
+        <br>
+        <button type="submit" class="btn-center btn-primary" href="/index">Добавить товар</button><br>
+    </form>
+</div>
 {% endblock %}
