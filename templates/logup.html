@@ -1,14 +1,50 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h1>Войти</h1>
+<h1>Регистрация</h1>
 <div>
     <form class="login_form" method="post">
+    	<input type="surname" class="form-control" id="surname" placeholder="Введите фамилию" name="surname">
+    	<input type="name" class="form-control" id="name" placeholder="Введите имя" name="name">
+        <input type="email" class="form-control" id="email" aria-describedby="emailHelp" placeholder="Введите адрес почты"
+        name="email">
+        <input type="phone_number" class="form-control" id="phone_number" placeholder="Введите свой номер телефона"
+        name="phone_number">
+        <input type="address" class="form-control" id="address"  placeholder="Введите свой город" name="address">
         <div class="form-group">
-        <input type="login" class="form-control" id="login"  placeholder="Введите логин" name="login">
+        <input type="login" class="form-control" id="login"  placeholder="Придумайте логин" name="login">
         <div class="form-group">
-        <input type="password" class="form-control" id="password"  placeholder="Введите пароль" name="password">
-        <button type="submit" class="btn-center btn-primary" href="/account">Войти</button><br>
+        <input type="password" class="form-control" id="password"  placeholder="Придумайте пароль" name="password">
+        <div class="form-group">
+            <label for="classSelect">Какой у Вас размер ноги?</label>
+            <select class="form-control" id="classSelect" name="size">
+              <option>38RU/6.5US</option>
+              <option>39RU/7US</option>
+              <option>40RU/7.5US</option>
+              <option>41RU/8US</option>
+              <option>42RU/9.5US</option>
+              <option>42.5RU/10US</option>
+              <option>43RU/10.5US</option>
+              <option>44RU/11US</option>
+              <option>45RU/11.5US</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="form-check">Укажите пол</label>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="sex" id="male" value="male" checked>
+              <label class="form-check-label" for="male">
+                Мужской
+              </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="sex" id="female" value="female">
+              <label class="form-check-label" for="female">	
+                Женский
+              </label>
+            </div>
+        </div>
+        <button type="submit" class="btn-center btn-primary" href="/index">Зарегистрироваться</button><br>
     </form>
 </div>
 
