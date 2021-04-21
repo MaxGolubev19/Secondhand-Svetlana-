@@ -4,7 +4,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from data import db_session
 from added import add_user, add_product, add_cart
 from data.users import User
-from flask_login import LoginManager, login_user, current_user
+from flask_login import LoginManager, login_user, current_user, logout_user
 
 
 app = Flask(__name__)
@@ -113,6 +113,11 @@ def account():
     params = {}
     params['title'] = 'Аккаунт'
     return render_template('account.html', **params)
+
+@app.route('/exit')
+def exit():
+    logout_user()
+    return redirect('/login')
 
 
 if __name__ == '__main__':
