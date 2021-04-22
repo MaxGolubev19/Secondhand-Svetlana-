@@ -1,5 +1,14 @@
 {% extends "base.html" %}
 
 {% block content %}
-	
+	{% for product in products %}
+		<h2>{{ product.name }}</h2>
+	    <div>
+	        {{ product.about }}
+	    </div>
+	    <div>
+	        Продавец - {{product.user.name}}, Цена - {{product.price}}
+	    </div>
+	    <a class="btn-center btn-primary" href="/account">Открыть</a>
+	{% endfor %}
 {% endblock %}

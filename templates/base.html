@@ -14,9 +14,9 @@
 		<header>
 			<div class="title">Название</div>
 			<div class="main-menu">
-				<a class="p-2 text-white" href="/">Главная</a>
-				<a class="p-2 text-white" href="/catalog">Каталог</a>
-				<a class="p-2 text-white" href="/about">О нас</a>
+				<a class="btn btn-light" href="/">Главная</a>
+				<a class="btn btn-light" href="/catalog">Каталог</a>
+				<a class="btn btn-light" href="/about">О нас</a>
 				{% if current_user.is_authenticated %}
 						<a class="btn btn-light" href="/account" style="float: right">Аккаунт</a>
 						<a class="btn btn-light" href="/exit" style="float: right">Выйти</a>

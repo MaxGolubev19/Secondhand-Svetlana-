@@ -4,6 +4,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from data import db_session
 from added import add_user, add_product, add_cart
 from data.users import User
+from data.catalog import Product
 from flask_login import LoginManager, login_user, current_user, logout_user
 
 
@@ -32,21 +33,25 @@ def about():
 def catalog():
     params = {}
     params['title'] = 'Товары'
+    db_sess = db_session.create_session()
+    params['products'] = db_sess.query(Product)
     return render_template('catalog.html', **params)
-
-
-@app.route('/catalog/<product>')
-def product(product):
-    params = {}
-    params['title'] = product
-    return render_template('product.html', **params)
 
 
 @app.route('/catalog/<category>')
 def category(category):
     params = {}
     params['title'] = category
-    return render_template(f'{category}.html', **params)
+    db_sess = db_session.create_session()
+    params['products'] = db_sess.query(Product).filter(Product.category == category)
+    return render_template(f'catalog.html', **params)
+
+
+@app.route('/<product>')
+def product(product):
+    params = {}
+    params['title'] = product
+    return render_template(f'{product}.html', **params)
 
 
 @app.route('/create')
@@ -56,16 +61,27 @@ def choice():
     return render_template('choice.html', **params)
 
 
-@app.route('/create/<category>')
+@app.route('/create/<category>', methods=['post', 'get'])
 def create(category):
     params = {}
+    params['title'] = 'Добавление товара'
+    if request.method == 'POST':
+        product = Product()
+        product.name = request.form.get('product_name')
+        product.about = request.form.get('description')
+        product.size = request.form.get('size')
+        product.price = request.form.get('price')
+        product.category = category
+        product.user_id = current_user.id
+        db_sess = db_session.create_session()
+        db_sess.add(product)
+        db_sess.commit()
+        return redirect("/")
     return render_template(f'{category}.html', **params)
 
 
 @app.route('/logup', methods=['post', 'get'])
-def login():
-    from data.users import User
-    
+def logup():    
     params = {}
     params['title'] = 'Регистрация'
     if request.method == 'POST':
@@ -88,7 +104,7 @@ def login():
 
 
 @app.route('/login', methods=['post', 'get'])
-def logup():
+def login():
     from data.users import User
     global user
     params = {}
