@@ -5,5 +5,9 @@
 	<div>{{ product.about }}</div>
 	<div>{{ product.price }}</div>
 	<div>{{ product.user.name }}</div>
-	<a class="w-100 btn btn-lg btn-primary" href="/buy/{{ product.id }}/{{ product.user.id }}" role="button">Купить</a>
+	{% if current_user.is_authenticated %}
+		<a class="w-100 btn btn-lg btn-primary" href="/buy/{{ product.id }}/{{ product.user.id }}" role="button">Купить</a>
+    {% else %}
+    	<a class="w-100 btn btn-lg btn-primary" href="/login" role="button">Купить</a>
+	{% endif %}
 {% endblock %}
