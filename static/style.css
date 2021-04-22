@@ -1,11 +1,19 @@
+/* Style */
+:root {
+  --color1: #2F4F4F;
+  --color2: #D3D3D3;
+  --bg-color: white;
+}
+
+
 .title {
-	background-color: white;
-	color: #4682B4;
+	background-color: var(--bg-color);
+	color: var(--color1);
 	font-size: 50px;
 }
 
 .main-menu {
-	background-color: #4682B4;
+	background-color: var(--color1);
 	padding: 20px 50px;
 	font-size: 20px;
 	width: 100%;
@@ -18,59 +26,90 @@
 footer {
 	margin-top: -50px;
     padding: 50px;
-    background-color: #4682B4;
-    color: white;
+    background-color: var(--color1);
+    color: var(--bg-color);
     width: 100%;
    }
 
+
+/*btn-outline-light */
 .btn-outline-light{
-	background-color: #4682B4;
-    color: white;
-    border-color: #4682B4;
+	background-color: var(--color1);
+    color: var(--bg-color);
+    border-color: var(--color1);
 }
 
 .btn-outline-light:hover {
-	background-color: white;
-    color: #4682B4;
-    border-color: #4682B4;
+	background-color: var(--bg-color);
+    color: var(--color1);
+    border-color: var(--color1);
 }
 
 .btn-outline-light:focus,
 .btn-outline-light:not(:disabled):not(.disabled):active{
-	background-color: white;
-    color: #4682B4;
-    border-color: #4682B4;
+	background-color: var(--bg-color);
+    color: var(--color1);
+    border-color: var(--color1);
 }
 
+
+/* btn-primary */
 .btn-primary {
-	background-color: #4682B4;
-    color: white;
-    border-color: #4682B4;
+	background-color: var(--color1);
+    color: var(--bg-color);
+    border-color: var(--color1);
 }
 
 .btn-primary:hover {
-	background-color: white;
-    color: #4682B4;
-    border-color: #4682B4;
+	background-color: var(--bg-color);
+    color: var(--color1);
+    border-color: var(--color1);
 }
 
 .btn-primary:focus,
 .btn-primary:not(:disabled):not(.disabled):active {
-	background-color: #4682B4;
-    color: white;
-    border-color: #4682B4;
+	background-color: var(--color1);
+    color: var(--bg-color);
+    border-color: var(--color1);
 }
 
+.btn-primary:focus,
+.btn-primary:not(:disabled):not(.disabled):active,
+.btn-primary:not(:disabled):not(.disabled):active:focus {
+	box-shadow: 0 0 0 0.2rem var(--color2);
+}
+
+
+/* btn-block */
 .btn-block {
-	background-color: white;
-    color: #4682B4;
-    border-color: #4682B4;
+	background-color: var(--bg-color);
+    color: var(--color1);
+    border-color: var(--color1);
 }
 
 .btn-block:hover,
 .btn-block:focus,
 .btn-block:not(:disabled):not(.disabled):active {
-	background-color: #4682B4;
-    color: white;
-    border-color: #4682B4;
+	background-color: var(--color1);
+    color: var(--bg-color);
+    border-color: var(--color1);
+}
+
+.btn-block:focus,
+.btn-block:not(:disabled):not(.disabled):active,
+.btn-block:not(:disabled):not(.disabled):active:focus {
+	box-shadow: 0 0 0 0.2rem var(--color2);
+}
+
+
+/* cards */
+
+.card-header{
+	color: var(--bg-color);
+	border: 1px solid var(--color1);
+	background-color: var(--color2);
+}
+
+.card-body {
+	border: 1px solid var(--color1);
 }

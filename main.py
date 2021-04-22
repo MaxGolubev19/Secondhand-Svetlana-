@@ -5,6 +5,7 @@ from data import db_session
 from added import add_user, add_product, add_cart
 from data.users import User
 from data.catalog import Product
+from data.cart import Cart
 from flask_login import LoginManager, login_user, current_user, logout_user
 
 
@@ -13,6 +14,13 @@ app.config['SECRET_KEY'] = 'yandexlyceum_secret_key'
 login_manager = LoginManager()
 login_manager.init_app(app)
 
+sex = {'man': 'Мужское',
+       'woman': 'Женское',
+       'child': 'Детское',
+       'Мужское': 'man',
+       'Женское': 'woman',
+       'Детское': 'child',
+    }
 
 @app.route('/')
 @app.route('/index')
@@ -41,17 +49,31 @@ def catalog():
 @app.route('/catalog/<category>')
 def category(category):
     params = {}
-    params['title'] = category
+    params['title'] = sex[category]
     db_sess = db_session.create_session()
-    params['products'] = db_sess.query(Product).filter(Product.category == category)
+    params['products'] = db_sess.query(Product).filter(Product.sex == category)
     return render_template(f'catalog.html', **params)
 
 
-@app.route('/<product>')
-def product(product):
+@app.route('/catalog/product/<int:id>')
+def product(id):
     params = {}
-    params['title'] = product
-    return render_template(f'{product}.html', **params)
+    db_sess = db_session.create_session()
+    product = db_sess.query(Product).filter(Product.id == id).first()
+    params['title'] = product.name
+    params['product'] = product
+    return render_template(f'product.html', **params)
+
+
+@app.route('/buy/<int:product_id>/<int:user_id>')
+def buy(product_id, user_id):
+    cart = Cart()
+    cart.product_id = product_id
+    cart.user_id = user_id
+    db_sess = db_session.create_session()
+    db_sess.add(cart)
+    db_sess.commit()
+    return redirect("/cart")
 
 
 @app.route('/create')
@@ -69,6 +91,9 @@ def create(category):
         product = Product()
         product.name = request.form.get('product_name')
         product.about = request.form.get('description')
+        if category == 'cosmetics':  product.sex = 'woman'
+        elif category == 'toys': product.sex = 'child'
+        else: product.sex = sex[request.form.get('sex')]
         product.size = request.form.get('size')
         product.price = request.form.get('price')
         product.category = category
@@ -129,6 +154,16 @@ def account():
     params = {}
     params['title'] = 'Аккаунт'
     return render_template('account.html', **params)
+
+
+@app.route('/cart')
+def cart():
+    params = {}
+    params['title'] = 'Корзина'
+    db_sess = db_session.create_session()
+    params['cart'] = db_sess.query(Cart).filter(Cart.user_id == current_user.id)
+    return render_template('cart.html', **params)
+
 
 @app.route('/exit')
 def exit():

@@ -1,5 +1,9 @@
 {% extends "base.html" %}
 
 {% block content %}
-	
+	<h1>{{ product.name }}</h1>
+	<div>{{ product.about }}</div>
+	<div>{{ product.price }}</div>
+	<div>{{ product.user.name }}</div>
+	<a class="w-100 btn btn-lg btn-primary" href="/buy/{{ product.id }}/{{ product.user.id }}" role="button">Купить</a>
 {% endblock %}
