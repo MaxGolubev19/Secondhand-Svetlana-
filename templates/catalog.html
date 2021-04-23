@@ -1,7 +1,6 @@
 {% extends "base.html" %}
 
 {% block content %}
-<img src="img/photo.png">
 <div>
   <form class="login_form" method="post">
   <div style="float:left;">
@@ -12,7 +11,7 @@
       <option>Не выбрано</option>
       <option {{ man }}>Мужское</option>
       <option {{ woman }}>Женское</option>
-      <option {{ child }}>Деткое</option>
+      <option {{ child }}>Детское</option>
     </select>
   </div>
   <div style="float:left;">
@@ -34,14 +33,14 @@
   <div style="float:right;">
     <select class="form-control" id="classSelect" name="size">
       <option>Не выбрано</option>
-      <option>2XS</option>
-      <option>XS</option>
-      <option>M</option>
-      <option>L</option>
-      <option>XL</option>
-      <option>2XL</option>
-      <option>3XL</option>
-      <option>4XL</option>
+      <option {{ size1 }}>2XS</option>
+      <option {{ size2 }}>XS</option>
+      <option {{ size3 }}>M</option>
+      <option {{ size4 }}>L</option>
+      <option {{ size5 }}>XL</option>
+      <option {{ size6 }}>2XL</option>
+      <option {{ size7 }}>3XL</option>
+      <option {{ size8 }}>4XL</option>
     </select>
   </div>
   <div style="float:right;">
@@ -54,15 +53,17 @@
   <div style="float:right;">
     <select class="form-control" id="classSelect" name="size">
       <option>Не выбрано</option>
-      <option>6.5US</option>
-      <option>7US</option>
-      <option>7.5US</option>
-      <option>8US</option>
-      <option>9.5US</option>
-      <option>10US</option>
-      <option>10.5US</option>
-      <option>11US</option>
-      <option>11.5US</option>
+      <option {{ size1 }}>6.5US</option>
+      <option {{ size2 }}>7US</option>
+      <option {{ size3 }}>7.5US</option>
+      <option {{ size4 }}>8US</option>
+      <option {{ size5 }}>8.5US</option>
+      <option {{ size6 }}>9US</option>
+      <option {{ size7 }}>9.5US</option>
+      <option {{ size8 }}>10US</option>
+      <option {{ size9 }}>10.5US</option>
+      <option {{ size10 }}>11US</option>
+      <option {{ size11 }}>11.5US</option>
     </select>
   </div>
   <div style="float:right;">
@@ -75,27 +76,27 @@
   <div style="float:right;">
     <select class="form-control" id="classSelect" name="size">
       <option>Не выбрано</option>
-      <option>10см</option>
-      <option>11см</option>
-      <option>12см</option>
-      <option>13см</option>
-      <option>14см</option>
-      <option>15см</option>
-      <option>16см</option>
-      <option>17см</option>
-      <option>18см</option>
-      <option>19см</option>
-      <option>20см</option>
-      <option>21см</option>
-      <option>22см</option>
-      <option>23см</option>
-      <option>24см</option>
-      <option>25см</option>
-      <option>26см</option>
-      <option>27см</option>
-      <option>28см</option>
-      <option>29см</option>
-      <option>30см</option>
+      <option {{ size10 }}>10см</option>
+      <option {{ size11 }}>11см</option>
+      <option {{ size12 }}>12см</option>
+      <option {{ size13 }}>13см</option>
+      <option {{ size14 }}>14см</option>
+      <option {{ size15 }}>15см</option>
+      <option {{ size16 }}>16см</option>
+      <option {{ size17 }}>17см</option>
+      <option {{ size18 }}>18см</option>
+      <option {{ size19 }}>19см</option>
+      <option {{ size20 }}>20см</option>
+      <option {{ size21 }}>21см</option>
+      <option {{ size22 }}>22см</option>
+      <option {{ size23 }}>23см</option>
+      <option {{ size24 }}>24см</option>
+      <option {{ size25 }}>25см</option>
+      <option {{ size26 }}>26см</option>
+      <option {{ size27 }}>27см</option>
+      <option {{ size28 }}>28см</option>
+      <option {{ size29 }}>29см</option>
+      <option {{ size30 }}>30см</option>
     </select>
   </div>
   <div style="float:right;">
@@ -123,4 +124,3 @@
       </div>
   {% endfor %}
 {% endblock %}
-
