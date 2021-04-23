@@ -39,6 +39,7 @@ footer {
 	background-color: var(--color1);
     color: var(--bg-color);
     border-color: var(--color1);
+    margin: 2px 0px;
 }
 
 .btn-outline-light:hover {
@@ -60,6 +61,7 @@ footer {
 	background-color: var(--color1);
     color: var(--bg-color);
     border-color: var(--color1);
+    margin: 2px 0px;
 }
 
 .btn-primary:hover {
@@ -87,6 +89,7 @@ footer {
 	background-color: var(--bg-color);
     color: var(--color1);
     border-color: var(--color1);
+    margin: 2px 0px;
 }
 
 .btn-block:hover,
@@ -109,6 +112,7 @@ footer {
 	background-color: var(--danger-color1);
     color: var(--bg-color);
     border-color: var(--danger-color1);
+    margin: 2px 0px;
 }
 
 .btn-danger:hover {

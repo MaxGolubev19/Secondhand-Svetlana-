@@ -2,42 +2,73 @@
 
 {% block content %}
 <div>
+  <form class="login_form" method="post">
   <div style="float:left;">
-    <label for="classSelect">Выберите отдел товара</label>
+    <label for="classSelect">Выберите отдел товара </label>
   </div>
   <div style="float:left;">
-    <select class="form-control" id="classSelect" name="class">
-      <option>Мужское</option>
-      <option>Женское</option>
-      <option>Дети</option>
+    <select class="form-control" id="classSelect" name="sex">
+      <option>Не выбрано</option>
+      <option {{ man }}>Мужское</option>
+      <option {{ woman }}>Женское</option>
+      <option {{ child }}>Деткое</option>
     </select>
   </div>
   <div style="float:left;">
     <label for="classSelect">Выберите категорию товара</label>
   </div>
   <div style="float:left;">
-    <select class="form-control" id="classSelect" name="class">
-      <option>Одежда</option>
-      <option>Обувь</option>
-      <option>Аксессуары</option>
-      <option>Другое</option>
+    <select class="form-control" id="classSelect" name="category">
+      <option>Не выбрано</option>
+      <option {{ wear }}>Одежда</option>
+      <option {{ shoes }}>Обувь</option>
+      <option {{ cosmetics }}>Косметика</option>
+      <option {{ accessories }}>Аксессуары</option>
+      <option {{ toys }}>Игрушки</option>
+      <option {{ other }}>Другое</option>
     </select>
   </div>
+  <button type="submit" class="btn btn-primary" href="/catalog">Применить</button>
+  {% if my_category == 'wear'%}
   <div style="float:right;">
-    <select class="form-control" id="classSelect" name="class">
-      <option>Для</option>
-      <option>Каждой</option>
-      <option>Категории</option>
-      <option>Свой</option>
+    <select class="form-control" id="classSelect" name="size">
+      <option>Не выбрано</option>
     </select>
   </div>
   <div style="float:right;">
     <label for="classSelect">Выберите размер</label>
   </div>
   <div style="clear:both;"></div>
+  <button type="submit" class="btn btn-primary" href="/catalog">Применить</button>
+  {% endif %}
+  {% if my_category == 'shoes'%}
+  <div style="float:right;">
+    <select class="form-control" id="classSelect" name="size">
+      <option>Не выбрано</option>
+    </select>
+  </div>
+  <div style="float:right;">
+    <label for="classSelect">Выберите размер</label>
+  </div>
+  <div style="clear:both;"></div>
+  <button type="submit" class="btn btn-primary" href="/catalog">Применить</button>
+  {% endif %}
+  {% if my_category == 'accessories'%}
+  <div style="float:right;">
+    <select class="form-control" id="classSelect" name="size">
+      <option>Не выбрано</option>
+    </select>
+  </div>
+  <div style="float:right;">
+    <label for="classSelect">Выберите размер</label>
+  </div>
+  <div style="clear:both;"></div>
+  <button type="submit" class="btn btn-primary" href="/catalog">Применить</button>
+  {% endif %}
+</form>
 </div>
-	{% for product in products %}
-	    <div class="col">
+  {% for product in products %}
+      <div class="col">
         <div class="card mb-4 rounded-3 shadow-sm">
           <div class="card-header py-3">
             <h4 class="my-0 fw-normal">{{ product.name }}</h4>
@@ -51,5 +82,5 @@
           </div>
         </div>
       </div>
-	{% endfor %}
+  {% endfor %}
 {% endblock %}

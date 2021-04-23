@@ -22,6 +22,14 @@ sex = {'man': 'Мужское',
        'Детское': 'child',
     }
 
+categories = {'Одежда': 'wear',
+            'Обувь': 'shoes',
+            'Аксессуары': 'accessories',
+            'Косметика': 'cosmetics',
+            'Игрушки': 'toys',
+            'Другое': 'other',
+    }
+
 @app.route('/')
 @app.route('/index')
 def index():
@@ -37,12 +45,23 @@ def about():
     return render_template('about.html', **params)
 
 
-@app.route('/catalog')
+@app.route('/catalog', methods=['post', 'get'])
 def catalog():
     params = {}
     params['title'] = 'Товары'
     db_sess = db_session.create_session()
-    params['products'] = db_sess.query(Product)
+    products = db_sess.query(Product)
+    if request.method == 'POST':
+        my_sex = sex.get(request.form.get('sex'), None)
+        my_category = categories.get(request.form.get('category'), None)
+        if my_sex:
+            products = products.filter(Product.sex == my_sex)
+            params[f'{my_sex}'] = 'selected="selected"'
+        if my_category:
+            params['my_category'] = my_category
+            products = products.filter(Product.category == my_category)
+            params[f'{my_category}'] = 'selected="selected"'
+    params['products'] = products
     return render_template('catalog.html', **params)
 
 
@@ -65,8 +84,8 @@ def product(id):
     return render_template(f'product.html', **params)
 
 
-@app.route('/buy/<int:product_id>')
-def buy(product_id):
+@app.route('/add_cart/<int:product_id>')
+def add_cart(product_id):
     cart = Cart()
     cart.product_id = product_id
     cart.user_id = current_user.id
@@ -74,6 +93,11 @@ def buy(product_id):
     db_sess.add(cart)
     db_sess.commit()
     return redirect("/cart")
+
+
+@app.route('/buy/<int:product_id>')
+def buy(product_id):
+    pass
 
 
 @app.route('/delete_cart/<int:id>')

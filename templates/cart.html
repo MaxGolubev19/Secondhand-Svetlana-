@@ -14,11 +14,11 @@
             </ul>
             <div>
 	            <a class="w-100 btn btn-lg btn-primary" href="/catalog/product/{{ item.product.id }}" role="button">Открыть</a>
+	            <a class="w-100 btn btn-lg btn-primary" href="/buy/{{ item.product.id }}" role="button">Купить</a>
 	            <a class="w-100 btn btn-lg btn-danger" href="/delete_cart/{{ item.id }}" role="button">Удалить из корзины</a>
 	        </div>
           </div>
         </div>
       </div>
 	{% endfor %}
-	<a class="w-100 btn btn-lg btn-block" href="/" role="button">Оформить заказ</a>
 {% endblock %}

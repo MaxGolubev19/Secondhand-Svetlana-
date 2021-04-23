@@ -7,6 +7,7 @@
 	<div>{{ product.user.name }}</div>
 	{% if current_user.is_authenticated %}
 		<a class="w-100 btn btn-lg btn-primary" href="/buy/{{ product.id }}" role="button">Купить</a>
+		<a class="w-100 btn btn-lg btn-primary" href="/add_cart/{{ product.id }}" role="button">Добавить в корзину</a>
     {% else %}
     	<a class="w-100 btn btn-lg btn-primary" href="/login" role="button">Купить</a>
 	{% endif %}
