@@ -3,6 +3,8 @@
   --color1: #2F4F4F;
   --color2: #D3D3D3;
   --bg-color: white;
+  --danger-color1: red;
+  --danger-color2: pink;
 }
 
 
@@ -24,8 +26,8 @@
 }
 
 footer {
-	margin-top: -50px;
-    padding: 50px;
+	position: fixed;
+    bottom: 0;
     background-color: var(--color1);
     color: var(--bg-color);
     width: 100%;
@@ -102,8 +104,30 @@ footer {
 }
 
 
-/* cards */
+/* btn-danger */
+.btn-danger {
+	background-color: var(--danger-color1);
+    color: var(--bg-color);
+    border-color: var(--danger-color1);
+}
 
+.btn-danger:hover {
+	background-color: var(--bg-color);
+    color: var(--danger-color1);
+    border-color: var(--danger-color1);
+}
+
+.btn-danger:focus,
+.btn-danger:not(:disabled):not(.disabled):active,
+.btn-danger:not(:disabled):not(.disabled):active:focus {
+	background-color: var(--danger-color1);;
+    color: var(--bg-color);
+    border-color: var(--danger-color1);
+	box-shadow: 0 0 0 0.2rem var(--danger-color2);
+}
+
+
+/* cards */
 .card-header{
 	color: var(--bg-color);
 	border: 1px solid var(--color1);

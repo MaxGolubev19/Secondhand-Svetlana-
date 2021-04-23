@@ -65,15 +65,34 @@ def product(id):
     return render_template(f'product.html', **params)
 
 
-@app.route('/buy/<int:product_id>/<int:user_id>')
-def buy(product_id, user_id):
+@app.route('/buy/<int:product_id>')
+def buy(product_id):
     cart = Cart()
     cart.product_id = product_id
-    cart.user_id = user_id
+    cart.user_id = current_user.id
     db_sess = db_session.create_session()
     db_sess.add(cart)
     db_sess.commit()
     return redirect("/cart")
+
+
+@app.route('/delete_cart/<int:id>')
+def delete_cart(id):
+    db_sess = db_session.create_session()
+    cart = db_sess.query(Cart).filter(Cart.id == id).first()
+    db_sess.delete(cart)
+    db_sess.commit()
+    return redirect('/cart')
+
+
+@app.route('/delete/<int:id>')
+def delete(id):
+    db_sess = db_session.create_session()
+    product = db_sess.query(Product).filter(Product.id == id).first()
+    if current_user.id == product.user_id or current_user.status == 'admin':
+        db_sess.delete(product)
+        db_sess.commit()
+    return redirect('/catalog')
 
 
 @app.route('/create')
@@ -140,6 +159,8 @@ def login():
         if user and check_password_hash(user.password, request.form.get('password')):
             login_user(user)
             return redirect("/")
+        else:
+            params['type_modal'] = 'error'
     return render_template('login.html', **params)
 
 
