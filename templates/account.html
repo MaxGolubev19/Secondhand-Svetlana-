@@ -3,6 +3,21 @@
 {% block content %}
 	<h1>{{current_user.surname}} {{current_user.name}}</h1>
 	{% if current_user.status == 'admin' %}
-		<h6>админ</h6>
+		<h6>Статус: админ</h6>
+	{% endif %}
+	{% if current_user.email %}
+	<div>
+		Почта: {{ current_user.email }}
+	</div>
+	{% endif %}
+	{% if current_user.phone %}
+	<div>
+		Телефон: {{ current_user.phone }}
+	</div>
+	{% endif %}
+	{% if current_user.address %}
+	<div>
+		Адрес: {{ current_user.address }}
+	</div>
 	{% endif %}
 {% endblock %}
