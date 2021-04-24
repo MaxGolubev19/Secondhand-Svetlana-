@@ -4,6 +4,15 @@
 <h1>{{ title }}</h1>
 <div><i>{{ boxes[0] }}</i></div><br>
 <div>
+    {% if error == 'login' %}
+        <font color="#ff0000">Пользователь с таким логином уже существует</font>
+    {% elif error == 'password' %}
+        <font color="#ff0000">Пароли не совпадают</font>
+    {% elif error == 'fields' %}
+        <font color="#ff0000">Заполнены не все обязательные поля</font>
+    {% else %}
+        <br>
+    {% endif %}
     <form class="login_form" method="post" enctype="multipart/form-data">
     	<input type="surname" class="form-control" id="surname" placeholder="{{ boxes[1] }}" name="surname">
     	<input type="name" class="form-control" id="name" placeholder="{{ boxes[2] }}" name="name">

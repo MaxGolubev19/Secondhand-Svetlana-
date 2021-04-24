@@ -7,7 +7,8 @@ from data.catalog import Product
 from data.cart import Cart
 from flask_login import LoginManager, login_user, current_user, logout_user
 from random import randint
-from translate import sex, categories, sizes
+from translator import sex, categories, sizes
+from translate import Translator
 import smtplib
 
 
@@ -113,7 +114,12 @@ def buy(product_id):
     db_sess = db_session.create_session()
     product = db_sess.query(Product).filter(Product.id == product_id).first()
     user = product.user
-    smtpObj.sendmail('svetlana_shop.info@mail.ru', user.email, f"""Hello, your item #{product.id} has been purchased.""")
+    translator = Translator(from_lang="Russian", to_lang="English")
+    eng_user = translator.translate(f'{user.surname} {user.name}')
+    eng_product = translator.translate(product.name)
+    print(eng_user, eng_product)
+    smtpObj.sendmail('svetlana_shop.info@mail.ru', user.email,
+                     f"""Hello, your item "{eng_product}" has been purchased by "{eng_user}".""")
     return redirect(f'/delete/{product_id}')
 
 
@@ -150,11 +156,22 @@ def create(category):
         product = Product()
         product.name = request.form.get('product_name')
         product.about = request.form.get('description')
-        if category == 'cosmetics':  product.sex = 'woman'
-        elif category == 'toys': product.sex = 'child'
-        else: product.sex = sex[request.form.get('sex')]
+        if category == 'cosmetics':
+            product.sex = 'woman'
+        elif category == 'toys':
+            product.sex = 'child'
+        else:
+            product.sex = sex[request.form.get('sex')]
         product.size = request.form.get('size')
         product.price = request.form.get('price')
+        if not product.name or not product.price:
+            params['error'] = 'fields'
+            return render_template(f'{category}.html', **params)
+        try:
+            int(product.price)
+        except ValueError:
+            params['error'] = 'price'
+            return render_template(f'{category}.html', **params)
         product.category = category
         product.user_id = current_user.id
         image = request.files['file']
@@ -198,6 +215,8 @@ def logup():
         password = generate_password_hash(request.form.get('password'))
         if check_password_hash(password, request.form.get('password2')):
             user.password = password
+        else:
+            params['error'] = 'password'
         user.size = request.form.get('size')
         user.sex = request.form.get('sex')
         image = request.files['file']
@@ -207,12 +226,14 @@ def logup():
             user.image = f'/static/images/pictures/{user.login}.jpg'
         check_user = db_sess.query(User).filter(User.login == user.login).first()
         if check_user:
+            params['error'] = 'login'
             return render_template('logup.html', **params)
         if user.surname and user.name and user.email and user.login and user.password:
             db_sess.add(user)
             db_sess.commit()
             login_user(user)
             return redirect("/")
+        params['error'] = 'fields'
     return render_template('logup.html', **params)
 
 
@@ -229,7 +250,7 @@ def login():
             login_user(user)
             return redirect("/")
         else:
-            params['type_modal'] = 'error'
+            params['error'] = True
     return render_template('login.html', **params)
 
 
@@ -284,12 +305,14 @@ def edit_user():
         if login:
             check_user = db_sess.query(User).filter(User.login == user.login).first()
             if check_user:
+                params['error'] = 'login'
                 return render_template('logup.html', **params)
             user.login = login
         password = generate_password_hash(request.form.get('password'))
         if password and check_password_hash(password, request.form.get('password2')):
             user.password = password
         elif password:
+            params['error'] = 'password'
             return render_template('logup.html', **params)
         sex = request.form.get('sex')
         if sex:

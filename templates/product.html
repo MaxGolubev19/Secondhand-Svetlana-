@@ -3,9 +3,22 @@
 {% block content %}
 	<img src={{ product.image }} class="product_img"></img>
 	<h1>{{ product.name }}</h1>
-	<div>{{ product.about }}</div>
-	<div>{{ product.price }}</div>
-	<div>{{ product.user.name }}</div>
+	{% if product.about %}
+	<div>
+		{{ product.about }}
+	</div>
+	{% endif %}
+	{% if product.category %}
+	<div>
+		Размер: {{ product.category }}
+	</div>
+	{% if product.size %}
+	<div>
+		Размер: {{ product.size }}
+	</div>
+	{% endif %}
+	<div>Цена: {{ product.price }}</div>
+	<div>Продавец: {{ product.user.name }}</div>
 	{% if current_user.is_authenticated and current_user.id != product.user_id %}
 		<a class="w-100 btn btn-lg btn-primary" href="/buy/{{ product.id }}" role="button">Купить</a>
 		<a class="w-100 btn btn-lg btn-primary" href="/add_cart/{{ product.id }}" role="button">Добавить в корзину</a>

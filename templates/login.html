@@ -4,6 +4,11 @@
 
 <h1>Войти</h1>
 <div>
+	{% if error %}
+		<font color="#ff0000">Неверный логин или пароль</font>
+	{% else %}
+		<br>
+	{% endif %}
     <form class="login_form" method="post">
         <div class="form-group">
         <input type="login" class="form-control" id="login"  placeholder="Введите логин" name="login">

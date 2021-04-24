@@ -2,9 +2,17 @@
 
 {% block content %}
 <h1>Косметика</h1>
+<div><i>* - обязательные поля</i></div><br>
+{% if error == 'price' %}
+    <font color="#ff0000">Цена должна быть целым числом</font>
+{% elif error == 'fields' %}
+    <font color="#ff0000">Заполнены не все обязательные поля</font>
+{% else %}
+    <br>
+{% endif %}
 <div>
     <form class="login_form" method="post" enctype="multipart/form-data">
-    	<input type="product_name" class="form-control" id="product_name" placeholder="Введите название товара" name="product_name">
+    	<input type="product_name" class="form-control" id="product_name" placeholder="Введите название товара*" name="product_name">
         <div class="form-group">
             <label for="description">Введите описание товара:</label>
             <textarea class="form-control" id="description" rows="3" name="description"></textarea>
@@ -13,7 +21,7 @@
             <label for="photo">Приложите фотографию</label>
             <input type="file" class="form-control-file" id="photo" name="file">
         </div><br>
-        <input type="price" class="form-control" id="price" placeholder="Введите цену (руб.)" name="price">
+        <input type="price" class="form-control" id="price" placeholder="Введите цену (руб.)*" name="price">
         <button type="submit" class="btn btn-primary" href="/index">Добавить товар</button><br>
     </form>
 </div>
