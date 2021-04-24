@@ -175,7 +175,7 @@ def create(category):
         product.category = category
         product.user_id = current_user.id
         image = request.files['file']
-        unic_name = f'{product.user_id}{product.name}{randint(1, 999999999)}'
+        unic_name = f'{product.user_id}{product.id}{randint(1, 999999999)}'
         with open(f'static/images/pictures/{unic_name}.jpg', 'wb') as file:
             file.write(image.read())
         if image:
@@ -217,7 +217,6 @@ def logup():
             user.password = password
         else:
             params['error'] = 'password'
-            return render_template('logup.html', **params)
         user.size = request.form.get('size')
         user.sex = request.form.get('sex')
         image = request.files['file']
