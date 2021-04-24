@@ -2,7 +2,6 @@ import os
 from flask import Flask, render_template, request, redirect
 from werkzeug.security import generate_password_hash, check_password_hash
 from data import db_session
-from added import add_user, add_product, add_cart
 from data.users import User
 from data.catalog import Product
 from data.cart import Cart
