@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 
 {% block content %}
+	<img src={{ current_user.image }} width="100px" height="100px" class="ava"></img>
 	<h1>{{current_user.surname}} {{current_user.name}}</h1>
 	{% if current_user.status == 'admin' %}
 		<h6>Статус: админ</h6>
@@ -20,4 +21,5 @@
 		Адрес: {{ current_user.address }}
 	</div>
 	{% endif %}
+	<a class="btn btn-primary" href="/edit_user">Изменить информацию</a>
 {% endblock %}

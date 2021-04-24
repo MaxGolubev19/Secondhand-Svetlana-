@@ -3,6 +3,7 @@ import sqlalchemy as sql
 from werkzeug.security import generate_password_hash
 from .db_session import SqlAlchemyBase
 from flask_login import UserMixin
+from random import randint
 
 
 class User(SqlAlchemyBase, UserMixin):
@@ -14,12 +15,11 @@ class User(SqlAlchemyBase, UserMixin):
     sex = sql.Column(sql.String, nullable=True)
     status = sql.Column(sql.String, default='user')
     address = sql.Column(sql.String, nullable=True)
-    email = sql.Column(sql.String, index=True, nullable=True)
+    email = sql.Column(sql.String, index=True)
     phone = sql.Column(sql.Integer, index=True, nullable=True)
-    size = sql.Column(sql.String, nullable=True)
     login = sql.Column(sql.String)
     password = sql.Column(sql.String)
-    image = sql.Column(sql.String, nullable=True)
+    image = sql.Column(sql.String, default=f'/static/images/pictures/null{randint(1, 5)}.jpg')
     created_date = sql.Column(sql.DateTime, default=datetime.datetime.now)
 
 

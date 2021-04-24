@@ -7,6 +7,9 @@ from data.users import User
 from data.catalog import Product
 from data.cart import Cart
 from flask_login import LoginManager, login_user, current_user, logout_user
+from random import randint
+from translate import sex, categories, sizes
+import smtplib
 
 
 app = Flask(__name__)
@@ -14,63 +17,9 @@ app.config['SECRET_KEY'] = 'yandexlyceum_secret_key'
 login_manager = LoginManager()
 login_manager.init_app(app)
 
-sex = {'man': 'Мужское',
-       'woman': 'Женское',
-       'child': 'Детское',
-       'Мужское': 'man',
-       'Женское': 'woman',
-       'Детское': 'child',
-    }
-
-categories = {'Одежда': 'wear',
-            'Обувь': 'shoes',
-            'Аксессуары': 'accessories',
-            'Косметика': 'cosmetics',
-            'Игрушки': 'toys',
-            'Другое': 'other',
-    }
-
-sizes = {'2XS': 'size1',
-         'XS': 'size2',
-         'M': 'size3',
-         'L': 'size4',
-         'XL': 'size5',
-         '2XL': 'size6',
-         '3XL': 'size7',
-         '4XL': 'size8',
-         '6.5US': 'size1',
-         '7US': 'size2',
-         '7.5US': 'size3',
-         '8US': 'size4',
-         '8.5US': 'size5',
-         '9US': 'size6',
-         '9.5US': 'size7',
-         '10US': 'size8',
-         '10.5US': 'size9',
-         '11US': 'size10',
-         '11.5US': 'size11',
-         '10см': 'size11',
-         '11см': 'size11',
-         '12см': 'size12',
-         '13см': 'size13',
-         '14см': 'size14',
-         '15см': 'size15',
-         '16см': 'size16',
-         '17см': 'size17',
-         '18см': 'size18',
-         '19см': 'size19',
-         '20см': 'size20',
-         '21см': 'size21',
-         '22см': 'size22',
-         '23см': 'size23',
-         '24см': 'size24',
-         '25см': 'size25',
-         '26см': 'size26',
-         '27см': 'size27',
-         '28см': 'size28',
-         '29см': 'size29',
-         '30см': 'size30',
-    }
+smtpObj = smtplib.SMTP('smtp.mail.ru', 587)
+smtpObj.starttls()
+smtpObj.login('svetlana_shop.info@mail.ru', 'juoRTt%o1IO1')
 
 
 @app.route('/')
@@ -107,7 +56,7 @@ def catalog():
             params[f'{my_category}'] = 'selected="selected"'
         if my_size:
             products = products.filter(Product.size == my_size)
-            params[f'{sizes[my_size]}'] = 'selected="selected"'
+            params[f'{sizes.get(my_size, None)}'] = 'selected="selected"'
     params['products'] = products
     return render_template('catalog.html', **params)
 
@@ -131,7 +80,7 @@ def category(category):
             params[f'{my_category}'] = 'selected="selected"'
         if my_size:
             products = products.filter(Product.size == my_size)
-            params[f'{sizes[my_size]}'] = 'selected="selected"'
+            params[f'{sizes.get(my_size, None)}'] = 'selected="selected"'
     else:
         products = products.filter(Product.sex == category)
         params[f'{category}'] = 'selected="selected"'
@@ -162,7 +111,11 @@ def add_cart(product_id):
 
 @app.route('/buy/<int:product_id>')
 def buy(product_id):
-    pass
+    db_sess = db_session.create_session()
+    product = db_sess.query(Product).filter(Product.id == product_id).first()
+    user = product.user
+    smtpObj.sendmail('svetlana_shop.info@mail.ru', user.email, f"""Hello, your item #{product.id} has been purchased.""")
+    return redirect(f'/delete/{product_id}')
 
 
 @app.route('/delete_cart/<int:id>')
@@ -178,9 +131,8 @@ def delete_cart(id):
 def delete(id):
     db_sess = db_session.create_session()
     product = db_sess.query(Product).filter(Product.id == id).first()
-    if current_user.id == product.user_id or current_user.status == 'admin':
-        db_sess.delete(product)
-        db_sess.commit()
+    db_sess.delete(product)
+    db_sess.commit()
     return redirect('/catalog')
 
 
@@ -206,6 +158,12 @@ def create(category):
         product.price = request.form.get('price')
         product.category = category
         product.user_id = current_user.id
+        image = request.files['file']
+        unic_name = f'{product.user_id}{product.name}{randint(1, 999999999)}'
+        with open(f'static/images/pictures/{unic_name}.jpg', 'wb') as file:
+            file.write(image.read())
+        if image:
+            product.image = f'/static/images/pictures/{unic_name}.jpg'
         db_sess = db_session.create_session()
         db_sess.add(product)
         db_sess.commit()
@@ -217,22 +175,45 @@ def create(category):
 def logup():    
     params = {}
     params['title'] = 'Регистрация'
+    params['boxes'] = ['* - обязательные поля',
+                       'Введите фамилию*',
+                       'Введите имя*',
+                       'Введите адрес почты*',
+                       'Введите свой номер телефона',
+                       'Введите свой адрес',
+                       'Придумайте логин*',
+                       'Придумайте пароль*',
+                       'Повторите пароль*',
+                       'Укажите пол',
+                       'Приложите фотографию',
+                       'Зарегистрироваться']
     if request.method == 'POST':
+        db_sess = db_session.create_session()
         user = User()
         user.surname = request.form.get('surname')
         user.name = request.form.get('name')
-        user.phone = request.form.get('phone_number')
         user.email = request.form.get('email')
+        user.phone = request.form.get('phone_number')
         user.address = request.form.get('address')
         user.login = request.form.get('login')
-        user.password = generate_password_hash(request.form.get('password'))
+        password = generate_password_hash(request.form.get('password'))
+        if check_password_hash(password, request.form.get('password2')):
+            user.password = password
         user.size = request.form.get('size')
         user.sex = request.form.get('sex')
-        db_sess = db_session.create_session()
-        db_sess.add(user)
-        db_sess.commit()
-        login_user(user)
-        return redirect("/")
+        image = request.files['file']
+        with open(f'static/images/pictures/{user.login}.jpg', 'wb') as file:
+            file.write(image.read())
+        if image:
+            user.image = f'/static/images/pictures/{user.login}.jpg'
+        check_user = db_sess.query(User).filter(User.login == user.login).first()
+        if check_user:
+            return render_template('logup.html', **params)
+        if user.surname and user.name and user.email and user.login and user.password:
+            db_sess.add(user)
+            db_sess.commit()
+            login_user(user)
+            return redirect("/")
     return render_template('logup.html', **params)
 
 
@@ -266,6 +247,64 @@ def account():
     return render_template('account.html', **params)
 
 
+@app.route('/edit_user', methods=['post', 'get'])
+def edit_user():  
+    params = {}
+    params['title'] = 'Редактирование'
+    params['boxes'] = ['Впишите новые данные в поля, которые хотите изменить',
+                       'Введите фамилию',
+                       'Введите имя',
+                       'Введите адрес почты',
+                       'Введите свой номер телефона',
+                       'Введите свой адрес',
+                       'Придумайте логин',
+                       'Придумайте пароль',
+                       'Повторите пароль',
+                       'Укажите пол',
+                       'Приложите фотографию',
+                       'Изменить']
+    if request.method == 'POST':
+        db_sess = db_session.create_session()
+        user = db_sess.query(User).filter(User.login == current_user.login).first()
+        surname = request.form.get('surname')
+        if surname:
+            user.surname = surname
+        name = request.form.get('name')
+        if name:
+            user.name = name
+        email = request.form.get('email')
+        if email:
+            user.email = email
+        phone = request.form.get('phone_number')
+        if phone:
+            user.phone = phone
+        address = request.form.get('address')
+        if address:
+            user.address = address
+        login = request.form.get('login')
+        if login:
+            check_user = db_sess.query(User).filter(User.login == user.login).first()
+            if check_user:
+                return render_template('logup.html', **params)
+            user.login = login
+        password = generate_password_hash(request.form.get('password'))
+        if password and check_password_hash(password, request.form.get('password2')):
+            user.password = password
+        elif password:
+            return render_template('logup.html', **params)
+        sex = request.form.get('sex')
+        if sex:
+            user.sex = sex
+        image = request.files['file']
+        with open(f'static/images/pictures/{user.login}.jpg', 'wb') as file:
+            file.write(image.read())
+        if image:
+            user.image = f'/static/images/pictures/{user.login}.jpg'
+        db_sess.commit()
+        return redirect("/account")
+    return render_template('logup.html', **params)
+
+
 @app.route('/cart')
 def cart():
     params = {}
@@ -285,20 +324,6 @@ if __name__ == '__main__':
     db_session.global_init("db/shop.db")
     port = int(os.environ.get("PORT", 5000))
     app.run(host='0.0.0.0', port=port)
-    
-"""
-if __name__ == '__main__':
-    db_session.global_init("db/shop.db")
-    app.run()
-"""
-
-
-
-
-
-
-
-
 
 
 

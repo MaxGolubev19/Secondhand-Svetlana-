@@ -15,5 +15,5 @@ class Product(SqlAlchemyBase):
     category = sql.Column(sql.String)
     user_id = sql.Column(sql.Integer, sql.ForeignKey("users.id"))
     user = sql.orm.relation('User')
-    image = sql.Column(sql.String, nullable=True)
+    image = sql.Column(sql.String, default='/static/images/pictures/no_image.jpg')
     created_date = sql.Column(sql.DateTime, default=datetime.datetime.now)

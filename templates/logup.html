@@ -1,38 +1,24 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h1>Регистрация</h1>
+<h1>{{ title }}</h1>
+<div><i>{{ boxes[0] }}</i></div><br>
 <div>
-    <form class="login_form" method="post">
-    	<input type="surname" class="form-control" id="surname" placeholder="Введите фамилию" name="surname">
-    	<input type="name" class="form-control" id="name" placeholder="Введите имя" name="name">
-        <input type="email" class="form-control" id="email" aria-describedby="emailHelp" placeholder="Введите адрес почты"
+    <form class="login_form" method="post" enctype="multipart/form-data">
+    	<input type="surname" class="form-control" id="surname" placeholder="{{ boxes[1] }}" name="surname">
+    	<input type="name" class="form-control" id="name" placeholder="{{ boxes[2] }}" name="name">
+        <input type="email" class="form-control" id="email" aria-describedby="emailHelp" placeholder="{{ boxes[3] }}"
         name="email">
-        <input type="phone_number" class="form-control" id="phone_number" placeholder="Введите свой номер телефона"
+        <input type="phone_number" class="form-control" id="phone_number" placeholder="{{ boxes[4] }}"
         name="phone_number">
-        <input type="address" class="form-control" id="address"  placeholder="Введите свой город" name="address">
+        <input type="address" class="form-control" id="address"  placeholder="{{ boxes[5] }}" name="address">
         <div class="form-group">
-        <input type="login" class="form-control" id="login"  placeholder="Придумайте логин" name="login">
+        <input type="login" class="form-control" id="login"  placeholder="{{ boxes[6] }}" name="login">
         <div class="form-group">
-        <input type="password" class="form-control" id="password"  placeholder="Придумайте пароль" name="password">
+        <input type="password" class="form-control" id="password"  placeholder="{{ boxes[7] }}" name="password">
+        <input type="password" class="form-control" id="password"  placeholder="{{ boxes[8] }}" name="password2">
         <div class="form-group">
-            <label for="classSelect">Какой у Вас размер ноги?</label>
-            <select class="form-control" id="classSelect" name="size">
-              <option>6.5US</option>
-              <option>7US</option>
-              <option>7.5US</option>
-              <option>8US</option>
-              <option>8.5US</option>
-              <option>9US</option>
-              <option>9.5US</option>
-              <option>10US</option>
-              <option>10.5US</option>
-              <option>11US</option>
-              <option>11.5US</option>
-            </select>
-        </div>
-        <div class="form-group">
-            <label for="form-check">Укажите пол</label>
+            <label for="form-check">{{ boxes[9] }}</label>
             <div class="form-check">
               <input class="form-check-input" type="radio" name="sex" id="male" value="male" checked>
               <label class="form-check-label" for="male">
@@ -46,7 +32,11 @@
               </label>
             </div>
         </div>
-        <button type="submit" class="btn btn-primary" href="/index">Зарегистрироваться</button><br>
+        <div class="form-group">
+            <label for="photo">{{ boxes[10] }}</label>
+            <input type="file" class="form-control-file" id="photo" name="file">
+        </div>
+        <button type="submit" class="btn btn-primary" href="/index">{{ boxes[11] }}</button><br>
     </form>
 </div>
 

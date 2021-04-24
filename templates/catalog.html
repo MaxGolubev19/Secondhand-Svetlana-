@@ -114,7 +114,7 @@
             <div class="card-header py-3">
               <h4 class="my-0 fw-normal">{{ product.name }}</h4>
             </div>
-            <img class="card-img-top" src="static/images/red_jacket.jpg"></img>
+            <img class="card-img-top" src={{ product.image }} class="catalog_img"></img>
             <div class="card-body">
               <ul class="list-unstyled mt-3 mb-4">
                 <li>Описание: {{ product.about }}</li>
@@ -122,8 +122,8 @@
               </ul>
               <a class="w-100 btn btn-lg btn-primary" href="/catalog/product/{{ product.id }}" role="button">Открыть</a>
             </div>
-          </div>
-        </div>
       </div>
   {% endfor %}
+  <br></br>
+  <br></br>
 {% endblock %}
