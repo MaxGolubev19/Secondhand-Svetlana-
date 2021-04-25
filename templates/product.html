@@ -12,7 +12,7 @@
 			{% endif %}
 			{% if product.category %}
 				<div>
-					<p class="lead fw-normal">Категория: {{ product.category }}</p>
+					<p class="lead fw-normal">Категория: {{ category_name }}</p>
 				</div>
 			{% endif %}
 			{% if product.size %}
@@ -21,7 +21,7 @@
 				</div>
 			{% endif %}
 			<p class="lead fw-normal">Цена: {{ product.price }}</p>
-			<p class="lead fw-normal">Продавец: {{ product.user.name }}</p>
+			<p class="lead fw-normal">Продавец: {{ product.user.surname }} {{ product.user.name }}</p>
       	{% if current_user.is_authenticated and current_user.id != product.user_id %}
 			<a class="w-100 btn btn-lg btn-primary" href="/buy/{{ product.id }}" role="button">Купить</a>
 			<a class="w-100 btn btn-lg btn-primary" href="/add_cart/{{ product.id }}" role="button">Добавить в корзину</a>

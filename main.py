@@ -95,6 +95,7 @@ def product(id):
     product = db_sess.query(Product).filter(Product.id == id).first()
     params['title'] = product.name
     params['product'] = product
+    params['category_name'] = categories[product.category]
     return render_template(f'product.html', **params)
 
 
@@ -220,9 +221,9 @@ def logup():
         user.size = request.form.get('size')
         user.sex = request.form.get('sex')
         image = request.files['file']
-        with open(f'static/images/pictures/{user.login}.jpg', 'wb') as file:
-            file.write(image.read())
         if image:
+            with open(f'static/images/pictures/{user.login}.jpg', 'wb') as file:
+                file.write(image.read())
             user.image = f'/static/images/pictures/{user.login}.jpg'
         check_user = db_sess.query(User).filter(User.login == user.login).first()
         if check_user:

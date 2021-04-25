@@ -12,6 +12,12 @@ categories = {'Одежда': 'wear',
             'Косметика': 'cosmetics',
             'Игрушки': 'toys',
             'Другое': 'other',
+            'wear': 'одежда',
+            'shoes': 'обувь',
+            'accessories': 'аксессуары',
+            'cosmeticsа': 'косметика',
+            'toys': 'игрушки',
+            'other': 'другое',
     }
 
 sizes = {'2XS': 'size1',
