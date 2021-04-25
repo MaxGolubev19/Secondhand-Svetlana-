@@ -1,25 +1,53 @@
 {% extends "base.html" %}
 
 {% block content %}
-	<img src={{ current_user.image }} width="100px" height="100px" class="ava"></img>
-	<h1>{{current_user.surname}} {{current_user.name}}</h1>
-	{% if current_user.status == 'admin' %}
-		<h6>Статус: админ</h6>
-	{% endif %}
-	{% if current_user.email %}
-	<div>
-		Почта: {{ current_user.email }}
-	</div>
-	{% endif %}
-	{% if current_user.phone %}
-	<div>
-		Телефон: {{ current_user.phone }}
-	</div>
-	{% endif %}
-	{% if current_user.address %}
-	<div>
-		Адрес: {{ current_user.address }}
-	</div>
-	{% endif %}
-	<a class="btn btn-primary" href="/edit_user">Изменить информацию</a>
+<div class="page-content" id="page-content">
+    <div class="padding">
+        <div class="row container d-flex justify-content">
+            <div class="col-xl-6 col-md-12">
+                <div class="card user-card-full">
+                    <div class="row m-l-0 m-r-0">
+                        <div class="col-sm-4 bg-c-lite-green user-profile">
+                            <div class="card-block text-center text-white">
+                                <div class="m-b-25"> 
+                                	<img src={{ current_user.image }} width="200px" height="200px" class="ava"></img> 
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-8">
+                            <div class="card-block">
+                                <h6 class="m-b-20 p-b-5 b-b-default f-w-600">{{current_user.surname}} {{current_user.name}}</h6>
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <p class="m-b-10 f-w-600">Email</p>
+                                        <h6 class="text-muted f-w-400">{{ current_user.email }}</h6>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <p class="m-b-10 f-w-600">Номер телефона</p>
+                                        <h6 class="text-muted f-w-400">{{ current_user.phone }}</h6>
+                                    </div>
+                                </div>
+                                <h6 class="m-b-20 m-t-40 p-b-5 b-b-default f-w-600"></h6>
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <p class="m-b-10 f-w-600">Адрес</p>
+                                        <h6 class="text-muted f-w-400">{{ current_user.address }}</h6>
+                                    </div>
+                                    {% if current_user.status == 'admin' %}
+                                    <div class="col-sm-6">
+                                        <p class="m-b-10 f-w-600">Статус</p>
+                                        <h6 class="text-muted f-w-400">admin</h6>
+                                    </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<br></br>
+<a class="btn btn-primary" href="/edit_user">Изменить информацию</a>
 {% endblock %}
