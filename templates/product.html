@@ -1,32 +1,38 @@
 {% extends "base.html" %}
 
 {% block content %}
-	<img src={{ product.image }} class="product_img"></img>
-	<h1>{{ product.name }}</h1>
-	{% if product.about %}
-	<div>
-		{{ product.about }}
-	</div>
-	{% endif %}
-	{% if product.category %}
-	<div>
-		Размер: {{ product.category }}
-	</div>
-	{% endif %}
-	{% if product.size %}
-	<div>
-		Размер: {{ product.size }}
-	</div>
-	{% endif %}
-	<div>Цена: {{ product.price }}</div>
-	<div>Продавец: {{ product.user.name }}</div>
-	{% if current_user.is_authenticated and current_user.id != product.user_id %}
-		<a class="w-100 btn btn-lg btn-primary" href="/buy/{{ product.id }}" role="button">Купить</a>
-		<a class="w-100 btn btn-lg btn-primary" href="/add_cart/{{ product.id }}" role="button">Добавить в корзину</a>
-    {% elif current_user.id != product.user_id %}
-    	<a class="w-100 btn btn-lg btn-primary" href="/login" role="button">Купить</a>
-	{% endif %}
-	{% if current_user.id == product.user.id or current_user.status == 'admin' %}
-		<a class="w-100 btn btn-lg btn-danger" href="/delete/{{ product.id }}" role="button">Удалить</a>
-	{% endif %}
+<div class="overflow-hidden text-center bg-light">
+    <div class="col">
+      	<h1 class="display-7 fw-normal">{{ product.name }}</h1>
+      	<img src={{ product.image }} class="product_img" width="400" height="400"></img>
+      		{% if product.about %}
+				<div>
+					<p class="lead fw-normal">{{ product.about }}</p>
+				</div>
+			{% endif %}
+			{% if product.category %}
+				<div>
+					<p class="lead fw-normal">Категория: {{ product.category }}</p>
+				</div>
+			{% endif %}
+			{% if product.size %}
+				<div>
+					<p class="lead fw-normal">Размер: {{ product.size }}</p>
+				</div>
+			{% endif %}
+			<p class="lead fw-normal">Цена: {{ product.price }}</p>
+			<p class="lead fw-normal">Продавец: {{ product.user.name }}</p>
+      	{% if current_user.is_authenticated and current_user.id != product.user_id %}
+			<a class="w-100 btn btn-lg btn-primary" href="/buy/{{ product.id }}" role="button">Купить</a>
+			<a class="w-100 btn btn-lg btn-primary" href="/add_cart/{{ product.id }}" role="button">Добавить в корзину</a>
+    	{% elif current_user.id != product.user_id %}
+    		<a class="w-100 btn btn-lg btn-primary" href="/login" role="button">Купить</a>
+		{% endif %}
+		{% if current_user.id == product.user.id or current_user.status == 'admin' %}
+			<a class="w-100 btn btn-lg btn-danger" href="/delete/{{ product.id }}" role="button">Удалить</a>
+		{% endif %}
+    </div>
+    <div class="product-device shadow-sm d-none d-md-block"></div>
+    <div class="product-device product-device-2 shadow-sm d-none d-md-block"></div>
+</div>
 {% endblock %}
