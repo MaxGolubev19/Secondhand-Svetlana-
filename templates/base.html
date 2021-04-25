@@ -44,7 +44,9 @@
 		<main role="main" class="container page">
 			{% block content %}{% endblock %}
 		</main>
-		<br></br>
+		{% for _ in range(5) %}
+			<br>
+		{% endfor %}
 		<footer>
 			<div class="container">
 				<div>©Антон и Максим, копирайтить нельзя</div>
