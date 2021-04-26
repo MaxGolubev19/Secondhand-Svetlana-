@@ -218,6 +218,7 @@ def logup():
             user.password = password
         else:
             params['error'] = 'password'
+            return render_template('logup.html', **params)
         user.size = request.form.get('size')
         user.sex = request.form.get('sex')
         image = request.files['file']
