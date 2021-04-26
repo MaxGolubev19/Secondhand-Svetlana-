@@ -21,7 +21,7 @@ smtpObj = smtplib.SMTP('smtp.mail.ru', 587)
 smtpObj.starttls()
 smtpObj.login('svetlana_shop.info@mail.ru', 'juoRTt%o1IO1')
 
-
+# Главная
 @app.route('/')
 @app.route('/index')
 def index():
@@ -29,14 +29,14 @@ def index():
     params['title'] = 'Главная'
     return render_template('index.html', **params)
 
-
+# Страница с информацией
 @app.route('/about')
 def about():
     params = {}
     params['title'] = 'О нас'
     return render_template('about.html', **params)
 
-
+# Каталог
 @app.route('/catalog', methods=['post', 'get'])
 def catalog():
     params = {}
@@ -60,7 +60,7 @@ def catalog():
     params['products'] = products
     return render_template('catalog.html', **params)
 
-
+# Каталог по категории
 @app.route('/catalog/<category>', methods=['post', 'get'])
 def category(category):
     params = {}
@@ -87,7 +87,7 @@ def category(category):
     params['products'] = products
     return render_template(f'catalog.html', **params)
 
-
+# Товар
 @app.route('/catalog/product/<int:id>')
 def product(id):
     params = {}
@@ -98,7 +98,7 @@ def product(id):
     params['category_name'] = categories[product.category]
     return render_template(f'product.html', **params)
 
-
+# Добавление товара в корзину
 @app.route('/add_cart/<int:product_id>')
 def add_cart(product_id):
     cart = Cart()
@@ -109,7 +109,7 @@ def add_cart(product_id):
     db_sess.commit()
     return redirect("/cart")
 
-
+# Покупка товара
 @app.route('/buy/<int:product_id>')
 def buy(product_id):
     db_sess = db_session.create_session()
@@ -123,7 +123,7 @@ def buy(product_id):
                      f"""Hello, your item "{eng_product}" has been purchased by "{eng_user}".""")
     return redirect(f'/delete/{product_id}')
 
-
+# Удаление товара из корзины
 @app.route('/delete_cart/<int:id>')
 def delete_cart(id):
     db_sess = db_session.create_session()
@@ -132,7 +132,7 @@ def delete_cart(id):
     db_sess.commit()
     return redirect('/cart')
 
-
+# Удаление товара
 @app.route('/delete/<int:id>')
 def delete(id):
     db_sess = db_session.create_session()
@@ -141,14 +141,14 @@ def delete(id):
     db_sess.commit()
     return redirect('/catalog')
 
-
+# Выбор категории создаваемого товара
 @app.route('/create')
 def choice():
     params = {}
     params['title'] = 'Добавление товара'
     return render_template('choice.html', **params)
 
-
+# Создание товара
 @app.route('/create/<category>', methods=['post', 'get'])
 def create(category):
     params = {}
@@ -187,7 +187,7 @@ def create(category):
         return redirect("/")
     return render_template(f'{category}.html', **params)
 
-
+# Регистрация
 @app.route('/logup', methods=['post', 'get'])
 def logup():    
     params = {}
@@ -238,7 +238,7 @@ def logup():
         params['error'] = 'fields'
     return render_template('logup.html', **params)
 
-
+# Вход
 @app.route('/login', methods=['post', 'get'])
 def login():
     from data.users import User
@@ -261,14 +261,14 @@ def load_user(user_id):
     db_sess = db_session.create_session()
     return db_sess.query(User).get(user_id)
 
-
+# Профиль
 @app.route('/account')
 def account():
     params = {}
     params['title'] = 'Аккаунт'
     return render_template('account.html', **params)
 
-
+# Редактирование профиля
 @app.route('/edit_user', methods=['post', 'get'])
 def edit_user():  
     params = {}
@@ -328,7 +328,7 @@ def edit_user():
         return redirect("/account")
     return render_template('logup.html', **params)
 
-
+# Корзина
 @app.route('/cart')
 def cart():
     params = {}
@@ -337,7 +337,7 @@ def cart():
     params['cart'] = db_sess.query(Cart).filter(Cart.user_id == current_user.id)
     return render_template('cart.html', **params)
 
-
+# Выход
 @app.route('/exit')
 def exit():
     logout_user()
